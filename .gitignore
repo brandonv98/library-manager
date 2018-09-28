@@ -1,0 +1,7 @@
+#node modules
+node_modules
+
+#DB
+*.db
+stylesheets/.DS_Store
+*.DS_Store

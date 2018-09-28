@@ -1,0 +1,25 @@
+{
+  "name": "library-manager",
+  "version": "1.0.0",
+  "description": "library manager application, search and store data",
+  "main": "index.js",
+  "dependencies": {
+    "sequelize": "^4.39.0",
+    "sequelize-cli": "^4.1.1",
+    "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sql",
+    "html",
+    "js",
+    "css",
+    "library",
+    "manager"
+  ],
+  "author": "Brandon VanCamp",
+  "license": "MIT"
+}
