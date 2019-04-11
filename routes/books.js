@@ -1,114 +1,80 @@
-var express = require('express');
-var router = express.Router();
-var Article = require("../models").Article;
+const express = require('express');
+const router = express.Router();
+const Book = require("../models").Book;
 
-/* GET articles listing. */
-router.get('/', function(req, res, next) {
-  Article.findAll({order: [["createdAt", "DESC"]]}).then(function(articles){
-    res.render("articles/index", {articles: articles, title: "My Awesome Blog" });
-  }).catch(function(error){
-      res.send(500, error);
-   });
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
+const bodyParser= require('body-parser');
+router.use(bodyParser.urlencoded({extended:true}))
+
+/* GET books listing. */
+router.get('/', (req, res, next) => {
+  Book.findAll({
+    order: [["title", "ASC"]]
+  })
+  .then( books => res.render('index', { title: 'All Books', books }) )
 });
 
-/* POST create article. */
-router.post('/', function(req, res, next) {
-  Article.create(req.body).then(function(article) {
-    res.redirect("/articles/" + article.id);
-  }).catch(function(error){
-      if(error.name === "SequelizeValidationError") {
-        res.render("articles/new", {article: Article.build(req.body), errors: error.errors, title: "New Article"})
+router.post('/search', (req, res, next) => {
+  Book.findAll({
+    where: {
+      [Op.or]: [
+        { title:  { [Op.like]: `%${req.body.search}%` }},
+        { author: { [Op.like]: `%${req.body.search}%` }},
+        { genre:  { [Op.like]: `%${req.body.search}%` }}
+      ]
+    }
+  })
+  .then( books => res.render('index',  { title: 'Search Results', books }) );
+})
+
+/* GET new books form listing. */
+router.get('/new', (req, res, next) => res.render('new-book',  { title: 'New Book', book: Book.build() }) );
+
+/* POST CREATE new books by id. */
+router.post('/new', (req, res, next) => {
+  Book.create(req.body)
+    .then( () => res.redirect(`/books`))
+    .catch(err =>{
+      if(err.name === "SequelizeValidationError"){
+        res.render('new-book',  {
+          title: 'New Book',
+          book: Book.build(req.body),
+          errors: err.errors
+        });
       } else {
-        throw error;
+        throw err;
       }
-  }).catch(function(error){
-      res.send(500, error);
-   });
-;});
-
-/* Create a new article form. */
-router.get('/new', function(req, res, next) {
-  res.render("articles/new", {article: {}, title: "New Article"});
+    })
+    .catch(error => res.sendStatus(500, error));
 });
 
-/* Edit article form. */
-router.get("/:id/edit", function(req, res, next){
-  Article.findById(req.params.id).then(function(article){
-    if(article) {
-      res.render("articles/edit", {article: article, title: "Edit Article"});      
-    } else {
-      res.send(404);
-    }
-  }).catch(function(error){
-      res.send(500, error);
-   });
+/* GET READ books by id. */
+router.get('/:id', (req, res, next) => {
+  Book.findById(req.params.id).then( book =>{ 
+    book ? res.render('update-book',  { title: 'Update Book', book }) : (
+      error = new Error('Page Not Found'),
+      error.status=404,
+      res.render('error',{error, title: `${error.status}-${error.message}`})
+    );
+  })
+  .catch(error => res.sendStatus(500, error));
 });
 
-
-/* Delete article form. */
-router.get("/:id/delete", function(req, res, next){
-  Article.findById(req.params.id).then(function(article){  
-    if(article) {
-      res.render("articles/delete", {article: article, title: "Delete Article"});
-    } else {
-      res.send(404);
-    }
-  }).catch(function(error){
-      res.send(500, error);
-   });
+/* POST UPDATE books by id. */
+router.post('/:id', (req, res, next) => {
+  Book.findById(req.params.id)
+  .then( book => book.update(req.body) )
+  .then( () => res.redirect('/books') )
+  .catch(error => res.sendStatus(500, error));
 });
 
-
-/* GET individual article. */
-router.get("/:id", function(req, res, next){
-  Article.findById(req.params.id).then(function(article){
-    if(article) {
-      res.render("articles/show", {article: article, title: article.title});  
-    } else {
-      res.send(404);
-    }
-  }).catch(function(error){
-      res.send(500, error);
-   });
+/* POST DELETE books by id. */
+router.post('/:id/delete', (req, res, next) =>{
+  Book.findById(req.params.id)
+  .then( book => book.destroy() )
+  .then( () => res.redirect('/books') );
 });
-
-/* PUT update article. */
-router.put("/:id", function(req, res, next){
-  Article.findById(req.params.id).then(function(article){
-    if(article) {
-      return article.update(req.body);
-    } else {
-      res.send(404);
-    }
-  }).then(function(article){
-    res.redirect("/articles/" + article.id);        
-  }).catch(function(error){
-      if(error.name === "SequelizeValidationError") {
-        var article = Article.build(req.body);
-        article.id = req.params.id;
-        res.render("articles/edit", {article: article, errors: error.errors, title: "Edit Article"})
-      } else {
-        throw error;
-      }
-  }).catch(function(error){
-      res.send(500, error);
-   });
-});
-
-/* DELETE individual article. */
-router.delete("/:id", function(req, res, next){
-  Article.findById(req.params.id).then(function(article){  
-    if(article) {
-      return article.destroy();
-    } else {
-      res.send(404);
-    }
-  }).then(function(){
-    res.redirect("/articles");    
-  }).catch(function(error){
-      res.send(500, error);
-   });
-});
-
 
 module.exports = router;
