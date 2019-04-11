@@ -1,23 +1,14 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "library.db",
-    "host": "127.0.0.1",
-    "dialect": "sqlite"
+    "dialect": "sqlite",
+    "storage": "libary.db"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "test_library.db",
-    "host": "127.0.0.1",
-    "dialect": "sqlite"
+    "dialect": "sqlite",
+    "storage": "test.db"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "production_library.db",
-    "host": "127.0.0.1",
-    "dialect": "sqlite"
+    "dialect": "sqlite",
+    "storage": "production.db"
   }
 }

@@ -4,13 +4,20 @@
   "description": "library manager application, search and store data",
   "main": "index.js",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "pug": "^2.0.3",
     "sequelize": "^4.42.0",
     "sequelize-cli": "^4.1.1",
     "sqlite3": "^4.0.6"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www // use: 'npm run dev' to start",
+    "sq": "node_modules/.bin/sequelize"
   },
   "keywords": [
     "sql",
