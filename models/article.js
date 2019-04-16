@@ -1,8 +1,8 @@
 'use strict';
-// var dateFormat = require('dateformat');
+var dateFormat = require('dateformat');
 
 module.exports = function(sequelize, DataTypes) {
-  var Book = sequelize.define('Book', {
+  var Article = sequelize.define('Article', {
     title: {
       type: DataTypes.STRING,
       validate: {
@@ -28,5 +28,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  return Book;
+  return Article;
 };

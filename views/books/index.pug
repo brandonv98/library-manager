@@ -10,7 +10,7 @@ block content
       tr
         th Title
         th Author
-        th Genre
+        th Genre 
         th Year
     tbody
     each book in books
@@ -19,5 +19,5 @@ block content
           a(href=`/books/${book.id}`)= book.title
         td= book.author
         td= book.genre
-        td= book.year
+        td= book.year 
 

@@ -3,6 +3,15 @@
   "version": "1.0.0",
   "description": "library manager application, search && store data",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "connect": "^3.6.6",
+    "cookie-parser": "^1.4.4",
+    "dateformat": "^3.0.3",
+    "express": "^4.16.4",
+    "jade": "^1.11.0",
+    "method-override": "^3.0.0",
+    "morgan": "^1.9.1",
+    "pug": "^2.0.3",
     "sequelize": "^5.3.1",
     "sequelize-cli": "^5.4.0",
     "sqlite3": "^4.0.6"
