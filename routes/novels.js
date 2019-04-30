@@ -8,15 +8,14 @@ const page = 'novels';
 router.get('/', function(req, res, next) {
   Novel.findAll({order: [["createdAt", "DESC"]]}).then(function(novels){
     res.render("novels/index", {novels: novels, title: "My library" });
-    // console.log(novels);
+    // console.log(novels); /// TESTING
   }).catch(function(error){
       res.status().send(500, error);
    });
 });
 
-// console.log(Book);
 
-/* POST create article. # - 3 */
+/* POST create novel. # - 3 */
 router.post('/', function(req, res, next) {
   Novel.create(req.body).then(function(novel) {
     res.redirect("/novels/" ); //+ novel.id);
@@ -24,12 +23,12 @@ router.post('/', function(req, res, next) {
 ;});
 
 
-/* Create a new article form. */
+/* Create a new novel form. */
 router.get('/new', function(req, res, next) {
   res.render("novels/new", {novel: Novel.build(), title: "New Book"});
 });
 
-/* Edit article form. */
+/* Edit novel form. */
 router.get("/:id/edit", function(req, res, next){
   Novel.findByPk(req.params.id).then(function(novel){
     if(novel) {

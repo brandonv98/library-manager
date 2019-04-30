@@ -1,43 +1,17 @@
-//- extends layout
+extends ../layout
 
-//- block content
-  h1 Books
-  include search
+block content
+  h1= title
+  p Listing all books
   p
-    a.button(href='/books/new') Create New Book
-  table
-    thead
-      tr
-        th Title
-        th Author
-        th Genre 
-        th Year
-    tbody
-    each book in books
-      tr
-        td
-          a(href=`/books/${book.id}`)= book.title
-        td= book.author
-        td= book.genre
-        td= book.year 
-
-h1 Hello World
-
-
-p.small By 
-      = Books.author
-      |  | 
-      = Books.publishedAt()
-
-
-
-//- div
-//-   label(for="title") Title:
-//-   input(type="text", name="title" value=Books.title)
-//- div
-//-   label(for="author") Author:
-//-   input(type="text", name="author" value=Books.author)
-//- div
-//-   label(for="body") Body:
-//-   textarea(name="body")= Books.body
-//- input(type="submit")
+    a(href="/books/new") Create New Book
+  
+  each book in books
+    //- p Testing location
+    p= book.year
+    h1= book.genre
+    h2= book.title
+    include by_line
+    //- p= book.shortDescription()
+    //- p= article.body
+    a(href="/books/" + book.id) Read More &rarr;
