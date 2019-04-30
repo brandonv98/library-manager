@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     author: DataTypes.STRING,
     body: DataTypes.TEXT,
-    // genre: DataTypes.STRING, // Needs to be added with  - CLI 
-    // year: DataTypes.INTEGER, //
+    // genre: DataTypes.STRING, // FIXME: Needs to be added with  sequelize - CLI 
+    // year: DataTypes.INTEGER, // FIXME: ^^^^
   }, {});
 
   Book.associate = function(models) {

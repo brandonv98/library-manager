@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
 const Novel = require("../models").Novel;
-// const page = 'novels';
+// const page = 'novels'; TODO: Use for more dynamic rendering of pages.
 
 
 /* GET novels listing. */
 router.get('/', function(req, res, next) {
   Novel.findAll({order: [["createdAt", "DESC"]]}).then(function(novels){
-    res.render("novels/index", {novels: novels, title: "My library" });
+    res.render("novels/index", {novels: novels, title: "My library Manager" });
     // console.log(novels); ///
   }).catch(function(error){
       res.status().send(500, error);
@@ -18,21 +18,21 @@ router.get('/', function(req, res, next) {
 /* POST create novel. # - 3 */
 router.post('/', function(req, res, next) {
   Novel.create(req.body).then(function(novel) {
-    res.redirect("/novels/" ); //+ novel.id);
+    res.redirect("/novels/" + novel.id);
   });
 ;});
 
 
 /* Create a new novel form. */
 router.get('/new', function(req, res, next) {
-  res.render("novels/new", {novel: Novel.build(), title: "New Book"});
+  res.render("novels/new", {novel: Novel.build(), title: "New Novel"});
 });
 
 /* Edit novel form. */
 router.get("/:id/edit", function(req, res, next){
   Novel.findByPk(req.params.id).then(function(novel){
     if(novel) {
-      res.render("novels/edit", {novel: novel, title: "Edit novel"});      
+      res.render("novels/edit", {novel: novel, title: "Edit Novel"});      
     } else {
       res.send(404);
     }
@@ -47,7 +47,7 @@ router.get("/:id/delete", function(req, res, next){
   Novel.findByPk(req.params.id).then(function(novel){  
     console.log(novel);
     if(novel) {
-      res.render("novels/delete", {novel: novel, title: "Delete Book"});
+      res.render("novels/delete", {novel: novel, title: "Delete Novel"});
     } else {
       res.send(404);
     }
@@ -85,7 +85,7 @@ router.put("/:id", function(req, res, next){
       if(error.name === "SequelizeValidationError") {
         var novel = Book.build(req.body);
         novel.id = req.params.id;
-        res.render("novels/edit", {novel: novel, errors: error.errors, title: "Edit Book"})
+        res.render("novels/edit", {novel: novel, errors: error.errors, title: "Edit Novel"})
       } else {
         throw error;
       }

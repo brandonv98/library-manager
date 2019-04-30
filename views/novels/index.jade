@@ -7,11 +7,10 @@ block content
     a(href="/novels/new") Create New Book
   
   each novel in novels
-    //- p Testing location
     h2= novel.title
     p= novel.year
     p= novel.genre
     include by_line
     p= novel.shortDescription()
-    //- p= article.body
+    //- p= article.body TODO: placement layout fix.
     a(href="/novels/" + novel.id) Read More &rarr;
