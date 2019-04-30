@@ -4,9 +4,9 @@ block content
   h1= title
   p 
     | Are you sure you want to delete 
-    em= book.title
+    em= novel.title
     | ?
-  form(action="/books/" + book.id + "?_method=DELETE", method="post")
-    a(href="/books/" + book.id) No! Take me back!
+  form(action="/novels/" + novel.id + "?_method=DELETE", method="post")
+    a(href="/novels/" + novel.id) No! Take me back!
     | 
     input(type="submit", value = "Yes, I am")

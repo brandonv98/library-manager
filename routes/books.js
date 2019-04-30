@@ -1,41 +1,39 @@
 var express = require('express');
 var router = express.Router();
-var Article = require("../models").Article;
+const Book = require("../models").Book;
 
-/* GET articles listing. */
+
+
+/* GET books listing. */
 router.get('/', function(req, res, next) {
-  Article.findAll({order: [["createdAt", "DESC"]]}).then(function(articles){
-    res.render("articles/index", {articles: articles, title: "Library Manager" });
+  Book.findAll({order: [["createdAt", "DESC"]]}).then(function(books){
+    res.render("articles/index", {books: books, title: "My Awesome library" });
+    // console.log(books);
   }).catch(function(error){
-      res.send(500, error);
+      res.status().send(500, error);
    });
 });
 
-/* POST create article. */
+// console.log(Book);
+
+/* POST create article. # - 3 */
 router.post('/', function(req, res, next) {
-  Article.create(req.body).then(function(article) {
-    res.redirect("/articles/" + article.id);
-  }).catch(function(error){
-      if(error.name === "SequelizeValidationError") {
-        res.render("articles/new", {article: Article.build(req.body), errors: error.errors, title: "New Article"})
-      } else {
-        throw error;
-      }
-  }).catch(function(error){
-      res.send(500, error);
-   });
+  Book.create(req.body).then(function(book) {
+    res.redirect("/books/" ); //+ book.id);
+  });
 ;});
+
 
 /* Create a new article form. */
 router.get('/new', function(req, res, next) {
-  res.render("articles/new", {article: {}, title: "New Article"});
+  res.render("articles/new", {book: Book.build(), title: "New Book"});
 });
 
 /* Edit article form. */
 router.get("/:id/edit", function(req, res, next){
-  Article.findById(req.params.id).then(function(article){
-    if(article) {
-      res.render("articles/edit", {article: article, title: "Edit Article"});      
+  Book.findByPk(req.params.id).then(function(book){
+    if(book) {
+      res.render("articles/edit", {book: book, title: "Edit book"});      
     } else {
       res.send(404);
     }
@@ -45,11 +43,12 @@ router.get("/:id/edit", function(req, res, next){
 });
 
 
-/* Delete article form. */
+/* Delete book form. */
 router.get("/:id/delete", function(req, res, next){
-  Article.findById(req.params.id).then(function(article){  
-    if(article) {
-      res.render("articles/delete", {article: article, title: "Delete Article"});
+  Book.findByPk(req.params.id).then(function(book){  
+    console.log(book);
+    if(book) {
+      res.render("articles/delete", {book: book, title: "Delete Book"});
     } else {
       res.send(404);
     }
@@ -59,11 +58,12 @@ router.get("/:id/delete", function(req, res, next){
 });
 
 
-/* GET individual article. */
+/* GET individual book. */
 router.get("/:id", function(req, res, next){
-  Article.findById(req.params.id).then(function(article){
-    if(article) {
-      res.render("articles/show", {article: article, title: article.title});  
+  Book.findByPk(req.params.id).then(function(book){
+    console.log(book.id);
+    if(book) {
+      res.render("articles/show", {book: book, title: book.title});  
     } else {
       res.send(404);
     }
@@ -72,21 +72,21 @@ router.get("/:id", function(req, res, next){
    });
 });
 
-/* PUT update article. */
+/* PUT update book. */
 router.put("/:id", function(req, res, next){
-  Article.findById(req.params.id).then(function(article){
-    if(article) {
-      return article.update(req.body);
+  Book.findByPk(req.params.id).then(function(book){
+    if(book) {
+      return book.update(req.body);
     } else {
       res.send(404);
     }
-  }).then(function(article){
-    res.redirect("/articles/" + article.id);        
+  }).then(function(book){
+    res.redirect("/books/" + book.id);        
   }).catch(function(error){
       if(error.name === "SequelizeValidationError") {
-        var article = Article.build(req.body);
-        article.id = req.params.id;
-        res.render("articles/edit", {article: article, errors: error.errors, title: "Edit Article"})
+        var book = Book.build(req.body);
+        book.id = req.params.id;
+        res.render("articles/edit", {book: book, errors: error.errors, title: "Edit Book"})
       } else {
         throw error;
       }
@@ -95,20 +95,21 @@ router.put("/:id", function(req, res, next){
    });
 });
 
-/* DELETE individual article. */
+/* DELETE individual books. */
 router.delete("/:id", function(req, res, next){
-  Article.findById(req.params.id).then(function(article){  
-    if(article) {
-      return article.destroy();
+  Book.findByPk(req.params.id).then(function(book){  
+    if(book) {
+      return book.destroy();
     } else {
       res.send(404);
     }
   }).then(function(){
-    res.redirect("/articles");    
+    res.redirect("/books");    
   }).catch(function(error){
       res.send(500, error);
    });
 });
+
 
 
 module.exports = router;

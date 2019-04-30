@@ -1,11 +1,11 @@
 extends ../layout
 
 block content
-  h1= article.title
+  h1= book.title
   include by_line
-  p= article.body
+  p= book.body
   a(href="../") &larr; Back
   | | 
-  a(href="/articles/" + article.id + "/edit") Edit Article
+  a(href="/books/" + book.id + "/edit") Edit Book
   | | 
-  a(href="/articles/" + article.id + "/delete") Delete Article
+  a(href="/books/" + book.id + "/delete") Delete Book

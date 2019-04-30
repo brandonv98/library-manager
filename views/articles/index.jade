@@ -2,12 +2,16 @@ extends ../layout
 
 block content
   h1= title
-  p Listing all articles
+  p Listing all books
   p
-    a(href="/articles/new") Create New Article
+    a(href="/books/new") Create New Book
   
-  each article in articles
-    h2= article.title
+  each book in books
+    //- p Testing location
+    p= book.year
+    h1= book.genre
+    h2= book.title
     include by_line
-    p= article.shortDescription()
-    a(href = "/articles/" + article.id) Read More &rarr;
+    //- p= book.shortDescription()
+    //- p= article.body
+    a(href="/books/" + book.id) Read More &rarr;

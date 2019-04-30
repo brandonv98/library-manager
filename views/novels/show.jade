@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  h1= novel.title
+  include by_line
+  p= 'Genre : ' + novel.genre
+  p= 'Year : ' + novel.year
+  p= novel.body
+  a(href="../novels") &larr; Back 
+  | | 
+  a(href="/novels/" + novel.id + "/edit") Edit novel 
+  | | 
+  a(href="/novels/" + novel.id + "/delete") Delete novel 

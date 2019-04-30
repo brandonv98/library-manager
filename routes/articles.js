@@ -11,6 +11,8 @@ router.get('/', function(req, res, next) {
    });
 });
 
+console.log(Article);
+
 /* POST create article. */
 router.post('/', function(req, res, next) {
   Article.create(req.body).then(function(article) {

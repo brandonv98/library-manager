@@ -1,18 +1,18 @@
 div
   label(for="title") Title:
-  input(type="text", name="title" value=book.title)
+  input(type="text", name="title" value=novel.title)
 div
   label(for="author") Author:
-  input(type="text", name="author" value=book.author)
+  input(type="text", name="author" value=novel.author)
 div
   label(for="year") Year:
-  input(type="number", name="year" value=book.year)
+  input(type="number", name="year" value=novel.year)
 div
   label(for="genre") genre:
-  input(type="text", name="genre" value=book.genre)
+  input(type="text", name="genre" value=novel.genre)
 div
   label(for="body") Body:
-  textarea(name="body")= book.body
+  textarea(name="body")= novel.body
   input(type="submit")
 
   //- form(action="/books/new", method="post")
