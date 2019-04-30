@@ -4,11 +4,10 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var connect = require('connect')
-var methodOverride = require('method-override')
+var connect = require('connect');
+var methodOverride = require('method-override');
 
 var routes = require('./routes/index');
-// var articles = require('./routes/articles');
 var books = require('./routes/books');
 var novels = require('./routes/novels');
 
@@ -28,7 +27,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-// app.use('/articles', articles);
 app.use('/books', books);
 app.use('/novels', novels);
 

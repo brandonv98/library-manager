@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 const Novel = require("../models").Novel;
-const page = 'novels';
+// const page = 'novels';
 
 
 /* GET novels listing. */
 router.get('/', function(req, res, next) {
   Novel.findAll({order: [["createdAt", "DESC"]]}).then(function(novels){
     res.render("novels/index", {novels: novels, title: "My library" });
-    // console.log(novels); /// TESTING
+    // console.log(novels); ///
   }).catch(function(error){
       res.status().send(500, error);
    });
