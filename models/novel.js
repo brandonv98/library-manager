@@ -2,8 +2,22 @@
 var dateFormat = require('dateformat');
 module.exports = (sequelize, DataTypes) => {
   const Novel = sequelize.define('Novel', {
-    title: DataTypes.STRING,
-    author: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Title is required"
+        }
+      }
+    },
+    author: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: "Author is required"
+        }
+      } 
+    },
     body: DataTypes.TEXT,
     genre: DataTypes.STRING,
     year: DataTypes.INTEGER
