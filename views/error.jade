@@ -4,3 +4,6 @@ block content
   h1= message
   h2= error.status
   pre #{error.stack}
+    if(bookNotFound)  
+      div
+        a(href="/novels") return back.

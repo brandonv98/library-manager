@@ -45,7 +45,6 @@ router.get("/:id/edit", function(req, res, next){
 /* Delete novel form. */
 router.get("/:id/delete", function(req, res, next){
   Novel.findByPk(req.params.id).then(function(novel){  
-    console.log(novel);
     if(novel) {
       res.render("novels/delete", {novel: novel, title: "Delete Novel"});
     } else {
@@ -60,14 +59,19 @@ router.get("/:id/delete", function(req, res, next){
 /* GET individual novel. */
 router.get("/:id", function(req, res, next){
   Novel.findByPk(req.params.id).then(function(novel){
-    console.log(novel.id);
     if(novel) {
       res.render("novels/show", {novel: novel, title: novel.title});  
     } else {
-      res.send(404);
+      res.send(404, error);
+      console.log('ERROR');
     }
   }).catch(function(error){
-      res.send(500, error);
+      // If book id = Not Found throw error.
+      res.render('error', {
+        message: "Oops a error occured - the book ID is Not Found!",
+        error: {status: "Status: 404", stack: "Can not find - " + req.params.id},
+        bookNotFound: true
+      });
    });
 });
 
@@ -108,6 +112,13 @@ router.delete("/:id", function(req, res, next){
       res.send(500, error);
    });
 });
+
+
+// app.use(function(req, res, next) {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
 
 
