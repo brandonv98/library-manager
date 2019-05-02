@@ -97,7 +97,7 @@ router.get("/:id", (req, res, next) => {
       }
     })
     .catch((error) => {
-      // If book id = Not Found throw error.
+      // If ID = Not Found throw error.
       res.render('error', {
         message: "Oops a error occured - the book ID is Not Found!",
         error: {
@@ -160,7 +160,5 @@ router.delete("/:id", (req, res, next) => {
     });
 });
 
-// app.use(function(req, res, next) {   var err = new Error('Not Found');
-// err.status = 404;   next(err); });
 
 module.exports = router;
