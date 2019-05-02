@@ -1,7 +1,10 @@
-/* Imported from sequelized blog */
 body {
   padding: 10px 50px 50px;
   font: 18px "Garamond", serif;
+}
+
+div {
+  padding: 20px;
 }
 
 a {
@@ -11,11 +14,12 @@ a {
   transition: 0.4s;
 }
 
-  a:hover {
-    color: black;
-  }
+a:hover {
+  color: black;
+}
 
-a.button, input[type=submit] {
+a.button,
+input[type=submit] {
   color: white;
   background: #019875;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -25,7 +29,14 @@ a.button, input[type=submit] {
   cursor: pointer;
 }
 
-form a.button, input[type=submit] {
+.pagination li {
+  display: inline-flex;
+  justify-content: space-between;
+  margin: 1em;
+}
+
+form a.button,
+input[type=submit] {
   margin-left: 140px;
   transition: 0.4s;
 }
@@ -34,9 +45,10 @@ input[type=submit] {
   border: 0;
 }
 
-  a.button:hover, input[type=submit]:hover {
-    background-color: #01b189;
-  }
+a.button:hover,
+input[type=submit]:hover {
+  background-color: #01b189;
+}
 
 p {
   margin: 20px auto;
@@ -54,14 +66,26 @@ h2 {
   padding-top: 20px;
 }
 
+h1.title {
+  border-bottom: 2px solid gold;
+  max-width: fit-content;
+}
+
+table {
+  display: flex;
+  flex-direction: column;
+}
+
 th {
   border-bottom: 2px solid #D8B493;
-  text-align: left;
-  padding: 5px 20px 5px 10px;
 }
 
 tr {
+  display: flex;
   min-height: 50px;
+  max-width: 100%;
+  width: 100%;
+  justify-content: space-around;
 }
 
 tr:nth-child(2n) {
@@ -69,7 +93,10 @@ tr:nth-child(2n) {
 }
 
 td {
-  padding: 5px 20px 5px 10px;
+  padding: 10px;
+  max-width: 100%;
+  width: 100%;
+  text-align: center;
 }
 
 label {
@@ -95,4 +122,33 @@ input[type=text] {
 
 .error {
   color: rgb(236, 15, 15);
+}
+
+input.DELETE:hover {
+  background: rgb(236, 15, 15);
+}
+
+.btn-box {
+  display: flex;
+  /* justify-content: center; */
+}
+
+.btn-box a {
+  color: white;
+  background: #019875;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 10px 14px 12px;
+  font-size: 14px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.btn-box a:hover {
+  background-color: #01b189;
+}
+
+@media only screen and (min-width: 656px) {
+  th {
+    padding: 5px 50px;
+  }
 }
