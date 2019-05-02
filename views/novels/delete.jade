@@ -7,6 +7,7 @@ block content
     em= novel.title
     | ?
   form(action="/novels/" + novel.id + "?_method=DELETE", method="post")
-    a(href="/novels/" + novel.id) No! Take me back!
-    | 
-    input(type="submit", value = "Yes, I am")
+    div(class="btn-box")
+      a(href="/novels/" + novel.id) No! Take me back!
+      | 
+      input(class="DELETE" type="submit", value = "Yes, I am")
