@@ -4,13 +4,19 @@ block content
   h1= title
   p Listing all novels
   p
-    a(href="/novels/new") Create New Book
-  
-  each novel in novels
-    h2= novel.title
-    p= novel.year
-    p= novel.genre
-    include by_line
-    p= novel.shortDescription()
-    //- p= article.body TODO: placement layout fix.
-    a(href="/novels/" + novel.id) Read More &rarr;
+    a.button(href='/novels/new') Create New Book
+  table
+    thead
+      tr
+        th Title
+        th Author
+        th Genre
+        th Year
+    tbody
+    each novel in novels
+        tr
+        td
+            a(href="/novels/" + novel.id)= novel.title
+        td= novel.author
+        td= novel.genre
+        td= novel.year
