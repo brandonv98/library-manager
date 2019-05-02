@@ -2,124 +2,165 @@ var express = require('express');
 var router = express.Router();
 const Novel = require("../models").Novel;
 // const page = 'novels'; TODO: Use for more dynamic rendering of pages.
-
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 /* GET novels listing. */
-router.get('/', function(req, res, next) {
-  Novel.findAll({order: [["createdAt", "DESC"]]}).then(function(novels){
-    res.render("novels/index", {novels: novels, title: "Library Manager" });
-    // console.log(novels); ///
-  }).catch(function(error){
-      res.status().send(500, error);
-   });
+router.get('/', (req, res, next) => {
+  Novel
+    .findAll({
+      order: [
+        ["year", "DESC"]
+    ]
+  })
+    .then((novels) => {
+      res.render("novels/index", {
+        novels: novels,
+        title: "Library Manager"
+      });
+    })
+    .catch(function (error) {
+      res
+        .status()
+        .send(500, error);
+    });
 });
 
-
-/* POST create novel. # - 3 */
-router.post('/', function(req, res, next) {
-  Novel.create(req.body).then(function(novel) {
-    res.redirect("/novels/" + novel.id);
-  });
-;});
-
+/* POST create new novel / book. # - 3 */
+router.post('/', (req, res, next) => {
+  Novel
+    .create(req.body)
+    .then((novel) => {
+      res.redirect("/novels/" + novel.id);
+    });;
+});
 
 /* Create a new novel form. */
-router.get('/new', function(req, res, next) {
-  res.render("novels/new", {novel: Novel.build(), title: "Create New Novel"});
+router.get('/new', (req, res, next) => {
+  res.render("novels/new", {
+    novel: Novel.build(),
+    title: "Create New Novel"
+  });
 });
 
 /* Edit novel form. */
-router.get("/:id/edit", function(req, res, next){
-  Novel.findByPk(req.params.id).then(function(novel){
-    if(novel) {
-      res.render("novels/edit", {novel: novel, title: "Edit Novel"});      
-    } else {
-      res.send(404);
-    }
-  }).catch(function(error){
+router.get("/:id/edit", (req, res, next) => {
+  Novel
+    .findByPk(req.params.id)
+    .then((novel) => {
+      if (novel) {
+        res.render("novels/edit", {
+          novel: novel,
+          title: "Edit Novel"
+        });
+      } else {
+        res.send(404);
+      }
+    })
+    .catch( (error) => {
       res.send(500, error);
-   });
+    });
 });
-
 
 /* Delete novel form. */
-router.get("/:id/delete", function(req, res, next){
-  Novel.findByPk(req.params.id).then(function(novel){  
-    if(novel) {
-      res.render("novels/delete", {novel: novel, title: "Delete Novel"});
-    } else {
-      res.send(404);
-    }
-  }).catch(function(error){
+router.get("/:id/delete", (req, res, next) => {
+  Novel
+    .findByPk(req.params.id)
+    .then((novel) => {
+      if (novel) {
+        res.render("novels/delete", {
+          novel: novel,
+          title: "Delete Novel"
+        });
+      } else {
+        res.send(404);
+      }
+    })
+    .catch((error) => {
       res.send(500, error);
-   });
+    });
 });
 
-
 /* GET individual novel. */
-router.get("/:id", function(req, res, next){
-  Novel.findByPk(req.params.id).then(function(novel){
-    if(novel) {
-      res.render("novels/show", {novel: novel, title: novel.title});  
-    } else {
-      res.send(404, error);
-      console.log('ERROR');
-    }
-  }).catch(function(error){
+router.get("/:id", (req, res, next) => {
+  Novel
+    .findByPk(req.params.id)
+    .then((novel) => {
+      if (novel) {
+        res.render("novels/show", {
+          novel: novel,
+          title: novel.title
+        });
+      } else {
+        res.send(404, error);
+        console.log('ERROR');
+      }
+    })
+    .catch((error) => {
       // If book id = Not Found throw error.
       res.render('error', {
         message: "Oops a error occured - the book ID is Not Found!",
-        error: {status: "Status: 404", stack: "Can not find - " + req.params.id},
+        error: {
+          status: "Status: 404",
+          stack: "Can not find - " + req.params.id
+        },
         bookNotFound: true
       });
-   });
+    });
 });
 
 /* PUT update novel. */
-router.put("/:id", function(req, res, next){
-  Novel.findByPk(req.params.id).then(function(novel){
-    if(novel) {
-      return novel.update(req.body);
-    } else {
-      res.send(404);
-    }
-  }).then(function(novel){
-    res.redirect(`/novels/` + novel.id);        
-  }).catch(function(error){
-      if(error.name === "SequelizeValidationError") {
+router.put("/:id", (req, res, next) => {
+  Novel
+    .findByPk(req.params.id)
+    .then((novel) => {
+      if (novel) {
+        return novel.update(req.body);
+      } else {
+        res.send(404);
+      }
+    })
+    .then((novel) => {
+      res.redirect(`/novels/` + novel.id);
+    })
+    .catch((error) => {
+      if (error.name === "SequelizeValidationError") {
         var novel = Book.build(req.body);
         novel.id = req.params.id;
-        res.render("novels/edit", {novel: novel, errors: error.errors, title: "Edit Novel"})
+        res.render("novels/edit", {
+          novel: novel,
+          errors: error.errors,
+          title: "Edit Novel"
+        })
       } else {
         throw error;
       }
-  }).catch(function(error){
+    })
+    .catch((error) => {
       res.send(500, error);
-   });
+    });
 });
 
 /* DELETE individual novels. */
-router.delete("/:id", function(req, res, next){
-  Novel.findByPk(req.params.id).then(function(novel){  
-    if(novel) {
-      return novel.destroy();
-    } else {
-      res.send(404);
-    }
-  }).then(function(){
-    res.redirect("/novels");    
-  }).catch(function(error){
+router.delete("/:id", (req, res, next) => {
+  Novel
+    .findByPk(req.params.id)
+    .then( (novel) => {
+      if (novel) {
+        return novel.destroy();
+      } else {
+        res.send(404);
+      }
+    })
+    .then( () => {
+      res.redirect("/novels");
+    })
+    .catch( (error) => {
       res.send(500, error);
-   });
+    });
 });
 
-
-// app.use(function(req, res, next) {
-//   var err = new Error('Not Found');
-//   err.status = 404;
-//   next(err);
-// });
-
-
+// app.use(function(req, res, next) {   var err = new Error('Not Found');
+// err.status = 404;   next(err); });
 
 module.exports = router;
