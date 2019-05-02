@@ -7,7 +7,7 @@ const Novel = require("../models").Novel;
 /* GET novels listing. */
 router.get('/', function(req, res, next) {
   Novel.findAll({order: [["createdAt", "DESC"]]}).then(function(novels){
-    res.render("novels/index", {novels: novels, title: "My library Manager" });
+    res.render("novels/index", {novels: novels, title: "Library Manager" });
     // console.log(novels); ///
   }).catch(function(error){
       res.status().send(500, error);
@@ -25,7 +25,7 @@ router.post('/', function(req, res, next) {
 
 /* Create a new novel form. */
 router.get('/new', function(req, res, next) {
-  res.render("novels/new", {novel: Novel.build(), title: "New Novel"});
+  res.render("novels/new", {novel: Novel.build(), title: "Create New Novel"});
 });
 
 /* Edit novel form. */
