@@ -1,0 +1,8 @@
+form(action="/novels/search", method="post")
+  div.btn--wrapper
+    p
+      label(for='search') Search
+      input#search(name='search', type='text')
+    p
+      input(type='submit', value='Search')
+      a.button(href='/') Clear Search
