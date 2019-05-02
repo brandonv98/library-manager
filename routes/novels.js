@@ -26,6 +26,12 @@ router.get('/', (req, res, next) => {
     });
 });
 
+// Post.findAll({
+//   where: {
+//     authorId: 18
+//   }
+// });
+
 /* POST create new novel / book. # - 3 */
 router.post('/', (req, res, next) => {
   Novel
