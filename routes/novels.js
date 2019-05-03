@@ -66,7 +66,6 @@ router.post('/', (req, res, next) => {
     .then((novel) => {
       res.redirect("/novels/" + novel.id);
     });
-  // }
 });
 
 /* Create a new novel form. */
