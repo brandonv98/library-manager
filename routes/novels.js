@@ -9,8 +9,8 @@ const Op = Sequelize.Op;
 router.get('/', (req, res, next) => {
   Novel
     .findAll({
-      order: [
-        ["year", "DESC"]
+    order: [
+      ["year", "DESC"]
     ]
   })
     .then((novels) => {
@@ -28,28 +28,40 @@ router.get('/', (req, res, next) => {
 
 // Search threw novels
 router.get('/term/:search', (req, res) => {
-  let { term } = req.query;
+  let {term} = req.query;
   // make lowercase
   term = term.toLowerCase();
 
   Novel.findAll({
     where: {
       [Op.or]: [
-        { title:  { [Op.like]: `%${term}%` }},
-        { author: { [Op.like]: `%${term}%` }},
-        { genre:  { [Op.like]: `%${term}%` }}
-      ]
+        {
+          title: {
+            [Op.like]: `%${term}%`
+          }
+        }, {
+          author: {
+            [Op.like]: `%${term}%`
+          }
+        }, {
+          genre: {
+            [Op.like]: `%${term}%`
+            }
+          }
+        ]
     }
-  })
-      .then(novels => res.render('novels', {novels, title: 'Search resaults for - ' + term}))
-      .catch( err => console.log(err));
+    })
+    .then(novels => res.render('novels', {
+    novels,
+    title: 'Search resaults for - ' + term
+  }))
+    .catch(err => console.log(err));
 });
-
 
 /* POST create new novel / book. # - 3 */
 router.post('/', (req, res, next) => {
-  
-    Novel
+
+  Novel
     .create(req.body)
     .then((novel) => {
       res.redirect("/novels/" + novel.id);
@@ -79,7 +91,7 @@ router.get("/:id/edit", (req, res, next) => {
         res.send(404);
       }
     })
-    .catch( (error) => {
+    .catch((error) => {
       res.send(500, error);
     });
 });
@@ -167,20 +179,19 @@ router.put("/:id", (req, res, next) => {
 router.delete("/:id", (req, res, next) => {
   Novel
     .findByPk(req.params.id)
-    .then( (novel) => {
+    .then((novel) => {
       if (novel) {
         return novel.destroy();
       } else {
         res.send(404);
       }
     })
-    .then( () => {
+    .then(() => {
       res.redirect("/novels");
     })
-    .catch( (error) => {
+    .catch((error) => {
       res.send(500, error);
     });
 });
-
 
 module.exports = router;
