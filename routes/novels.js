@@ -26,19 +26,44 @@ router.get('/', (req, res, next) => {
     });
 });
 
-// Post.findAll({
-//   where: {
-//     authorId: 18
-//   }
-// });
+// Search threw novels
+router.get('/:search:type', (req, res) => {
+  const { term } = req.query;
+
+  Novel.findAll({
+    where: {
+      [Op.or]: [
+        { title:  { [Op.like]: `%${term}%` }},
+        { author: { [Op.like]: `%${term}%` }},
+        { genre:  { [Op.like]: `%${term}%` }}
+      ]
+    }
+  })
+      .then(novels => res.render('novels', {novels, title: 'Search resaults for - ' + term}))
+      .catch( err => console.log(err));
+});
+
 
 /* POST create new novel / book. # - 3 */
 router.post('/', (req, res, next) => {
-  Novel
+  // let errors = [];
+
+  // if(!title) {
+    // error.push({message: 'Please add a title'});
+  // }
+
+  // if (error.length > 0) {
+  //   res.render('/', {
+  //     errors,
+  //     title
+  //   });
+  // } else {
+    Novel
     .create(req.body)
     .then((novel) => {
       res.redirect("/novels/" + novel.id);
-    });;
+    });
+  // }
 });
 
 /* Create a new novel form. */
@@ -104,14 +129,14 @@ router.get("/:id", (req, res, next) => {
     })
     .catch((error) => {
       // If ID = Not Found throw error.
-      res.render('error', {
-        message: "Oops a error occured - the book ID is Not Found!",
-        error: {
-          status: "Status: 404",
-          stack: "Can not find - " + req.params.id
-        },
-        bookNotFound: true
-      });
+      // res.render('error', {
+      //   message: "Oops a error occured - the book ID is Not Found!",
+      //   error: {
+      //     status: "Status: 404",
+      //     stack: "Can not find - " + req.params.id
+      //   },
+      //   bookNotFound: true
+      // });
     });
 });
 
