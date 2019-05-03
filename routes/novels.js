@@ -27,8 +27,10 @@ router.get('/', (req, res, next) => {
 });
 
 // Search threw novels
-router.get('/:search:type', (req, res) => {
-  const { term } = req.query;
+router.get('/term/:search', (req, res) => {
+  let { term } = req.query;
+  // make lowercase
+  term = term.toLowerCase();
 
   Novel.findAll({
     where: {
