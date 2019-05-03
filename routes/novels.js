@@ -48,18 +48,7 @@ router.get('/term/:search', (req, res) => {
 
 /* POST create new novel / book. # - 3 */
 router.post('/', (req, res, next) => {
-  // let errors = [];
-
-  // if(!title) {
-    // error.push({message: 'Please add a title'});
-  // }
-
-  // if (error.length > 0) {
-  //   res.render('/', {
-  //     errors,
-  //     title
-  //   });
-  // } else {
+  
     Novel
     .create(req.body)
     .then((novel) => {
@@ -131,14 +120,14 @@ router.get("/:id", (req, res, next) => {
     })
     .catch((error) => {
       // If ID = Not Found throw error.
-      // res.render('error', {
-      //   message: "Oops a error occured - the book ID is Not Found!",
-      //   error: {
-      //     status: "Status: 404",
-      //     stack: "Can not find - " + req.params.id
-      //   },
-      //   bookNotFound: true
-      // });
+      res.render('error', {
+        message: "Oops a error occured - the book ID is Not Found!",
+        error: {
+          status: "Status: 404",
+          stack: "Can not find - " + req.params.id
+        },
+        bookNotFound: true
+      });
     });
 });
 
