@@ -53,7 +53,7 @@ document.querySelector('.pagination ul').addEventListener('click', e => {
   // loop over pagination links to remove active class from all
   for (let i = 0; i < anchors.length; i++) {
     anchors[i].classList.remove('active');
-    //  Assign active to button clicked.
+    //  Assign active to button clicked
     e.target.classList.add('active');
   }
   currentPage = e.target.innerHTML;
