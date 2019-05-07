@@ -8,7 +8,6 @@ var connect = require('connect');
 var methodOverride = require('method-override');
 
 var routes = require('./routes/');
-// var books = require('./routes/books');
 var novels = require('./routes/novels');
 
 var app = express();
@@ -27,7 +26,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-// app.use('/books', books);
 app.use('/novels', novels);
 
 // catch 404 and forward to error handler
