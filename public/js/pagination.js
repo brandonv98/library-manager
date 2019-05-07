@@ -7,7 +7,7 @@ let pagesNeeded = Math.ceil(rows.length / recordsPerPage);
 console.log(`Records per page: ${recordsPerPage}`);
 console.log(`Pages needed: ${pagesNeeded}`);
 
-// create outer div 
+// create outer div
 const div = document.createElement('div')
 div.className = 'pagination';
 
@@ -15,7 +15,9 @@ div.className = 'pagination';
 const ul = document.createElement('ul');
 div.appendChild(ul);
 
-document.querySelector('body').appendChild(div);
+document
+  .querySelector('body')
+  .appendChild(div);
 // debugger;
 for (let i = 0; i < pagesNeeded; i++) {
   // Show pagination links if pages needed is greater then 1
@@ -26,9 +28,11 @@ for (let i = 0; i < pagesNeeded; i++) {
 
     // append each link inside the ul
     ul.appendChild(li);
-    document.querySelector('.pagination ul')
+    document
+      .querySelector('.pagination ul')
       .getElementsByTagName('a')[currentPage - 1]
-      .classList.add('active');
+      .classList
+      .add('active');
   }
 }
 
@@ -46,17 +50,24 @@ function showPage(list, page, recordsPerPage) {
 
 showPage(rows, currentPage, recordsPerPage);
 
-document.querySelector('.pagination ul').addEventListener('click', e => {
-  e.preventDefault();
-  if(event.target.nodeName === 'A') {
-    let anchors = document.querySelectorAll('.pagination li a');
-  // loop over pagination links to remove active class from all
-  for (let i = 0; i < anchors.length; i++) {
-    anchors[i].classList.remove('active');
-    //  Assign active to button clicked
-    e.target.classList.add('active');
-  }
-  currentPage = e.target.innerHTML;
-  showPage(rows, currentPage, recordsPerPage); 
-  }
-});
+document
+  .querySelector('.pagination ul')
+  .addEventListener('click', e => {
+    e.preventDefault();
+    if (event.target.nodeName === 'A') {
+      let anchors = document.querySelectorAll('.pagination li a');
+      // loop over pagination links to remove active class from all
+      for (let i = 0; i < anchors.length; i++) {
+        anchors[i]
+          .classList
+          .remove('active');
+        //  Assign active to button clicked
+        e
+          .target
+          .classList
+          .add('active');
+      }
+      currentPage = e.target.innerHTML;
+      showPage(rows, currentPage, recordsPerPage);
+    }
+  });
