@@ -1,8 +1,11 @@
 const rows = document.querySelectorAll('tbody tr');
 const recordsPerPage = 20;
 let currentPage = 1;
+console.log(`Total records: ${rows.length}`);
 
 let pagesNeeded = Math.ceil(rows.length / recordsPerPage);
+console.log(`Records per page: ${recordsPerPage}`);
+console.log(`Pages needed: ${pagesNeeded}`);
 
 // create outer div 
 const div = document.createElement('div')
