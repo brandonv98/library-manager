@@ -64,12 +64,36 @@ router.get('/term/:search', (req, res) => {
 
 /* POST create new novel / book. # - 3 */
 router.post('/', (req, res, next) => {
+  let {title, author, body, genre, year} = req.body;
+  let errors = [];
 
-  Novel
+  if(!title) {
+    errors.push({message: 'Please add a title.'});
+  }
+  if(!author) {
+    errors.push({message: 'Please add a author.'});
+  }
+  if(!genre) {
+    errors.push({message: 'Please add a genre.'});
+  }
+  if(!year) {
+    errors.push({message: 'Please add a year.'});
+  }
+
+  if(errors.length > 0) {
+    console.error(errors);
+    res.render("novels/new", {
+      novel: Novel.build(),
+      title: "Create New Novel",
+      errors: errors,
+    });
+  } else {
+    Novel
     .create(req.body)
     .then((novel) => {
       res.redirect("/novels/" + novel.id);
-    });
+    });  
+  }
 });
 
 /* Create a new novel form. */
