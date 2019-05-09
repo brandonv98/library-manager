@@ -47,7 +47,11 @@ router.get('/term/:search', (req, res) => {
           genre: {
             [Op.like]: `%${term}%`
             }
-          }
+          }, {
+            year: {
+              [Op.like]: `%${term}%`
+              }
+            }
         ]
     }
     })
