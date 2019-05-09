@@ -59,7 +59,7 @@ $ git clone https://github.com/brandonv98/library-manager.git
 ___
 
 ### Deployment
- N/A at this time..
+Deployment ready.
 
 ___
 
