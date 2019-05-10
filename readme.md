@@ -74,6 +74,18 @@ ___
 
 ___
 
+## Errors
+* If you have recived the following error stack 
+``` 
+  throw new Error(`Please install ${moduleName} package manually`);
+  ^
+Error: Please install sqlite3 package manually
+```
+* How to fix - use ``nvm`` to set node && npm version to, node -v : 11.15.0 && npm -v : 6.7.0.
+
+___
+
+
 ## Authors
 * **Brandon VanCamp** - [WebSite](https://csdevs.io/)
 
