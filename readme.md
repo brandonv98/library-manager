@@ -74,7 +74,7 @@ ___
 
 ___
 
-## Errors
+## Errors && Debugging
 * If you have recived the following error stack 
 ``` 
   throw new Error(`Please install ${moduleName} package manually`);
